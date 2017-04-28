@@ -1,0 +1,154 @@
+<div class="row">
+  <div class= "col-md-5 col-xs-12" style="margin:20px;">
+    <h1>About Books</h1>
+  <table class="table table-hover table-bordered" id="table1">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Author name</th>
+        <th>Books</th>
+      </tr>
+
+    </thead>
+    <% @author.each do |i| %>
+    <tr>
+    <td><%=  i.name %></td>
+    <% i.books.each do |c| %>
+    <td><%= c.name%></td>
+    <%end%>
+    </tr>
+    <%end%>
+  </table>
+</div>
+  <div class="col-md-5 col-xs-12" style="margin:20px;">
+  <h1>About comments</h1>
+  <table class="table table-hover table-bordered" id="table2">
+    <thead  class="thead-inverse">
+      <tr>
+        <th>Type</th>
+        <th>Commneted_by</th>
+        <th>Comment</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+      <%@comment.each do |i|%>
+      <tr>
+      <td>
+        <%= i.commentable_type%>
+      </td>
+
+      <td>
+        <%if i.commentable_type == "User"%>
+        <%=User.all.where(id: i.commentable_id).first.name%>
+        <%else%>
+        <%= Game.all.where(id: i.commentable_id).first.title%>
+        <%end%>
+      </td>
+      <td>
+        <%= i.body%>
+      </td>
+      </tr>
+      <%end%>
+  </tbody>
+  </table>
+</div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-xs-12">
+    <form class="form-inline" action="/add_author_book" method="post">
+      <label for="author">Author Name:</label>
+      <input type="text" name="author_name" value="" id="author" class="form-control">
+      <label for="book">Book Name</label>
+      <input type="text" name="book_name" value="" id="book" class="form-control">
+      <button type="submit" name="button" id="submit" class="form-control btn btn-block-large btn-default" class="form-control">ADD</button>
+    </form>
+  </div>
+</div>
+<div class="row" style="margin:40px;">
+  <table class="table table-hover table-bordered" style="text-align:center;">
+    <thead style="text-align:center;">
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Events
+        </th>
+        <th>
+          Games
+        </th>
+        <th>
+          Comments
+        </th>
+        <th>
+          Enrollments
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @user.each do |user| %>
+        <tr>
+          <td>
+            <%= user.name %>
+          </td>
+          <td>
+            <ul>
+              <%user.events.each do |event|%>
+               <li><%=event.title%></li>
+              <%end%>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <%user.games.each do |game|%>
+               <li><%=game.title%></li>
+              <%end%>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <%user.comments.each do |comment|%>
+               <li><%=comment.body%></li>
+              <%end%>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <%user.enrollments.each do |enrollment|%>
+               <li><p><%=enrollment.user.name%></p><strong>For</strong> <p><%=enrollment.game.title%></p></li>
+              <%end%>
+            </ul>
+          </td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
+<%=link_to 'Add User',new_user_path,class: "btn btn-large btn-primary"%>
+<script type="text/javascript">
+$(document).on('click','#submit',function(){
+  if (!$('#author').val() || !$('#book').val()) {
+    alert("please fill the required entries")
+    return false;
+  }
+  var x = $('#author').val();
+  console.log(x);
+  var y = $('#book').val();
+  console.log(y);
+  // $.ajax({
+  //   type: 'POST',
+  //   url: '/add_author_book',
+  //   dataType: 'json',
+  //   data: {author_data: x,book_data: y},
+  //   success: function(data) {
+  //     console.log(data);
+  //     alert("Author added");
+  //     location.reload(true)
+  //   }
+  // });
+});
+
+
+
+</script>

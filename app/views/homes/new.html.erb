@@ -1,0 +1,28 @@
+<div class="row" style="margin:40px;">
+  <h3>Form for User<h3>
+    <%=form_for @user do |user|%>
+      <label for="name">Name</label>
+      <%=user.text_field :name, class: "form-control",placeholder: "Enter User Name", required: "required" %>
+        <%=user.fields_for :events do |eve|%>
+          <label for="title">Event</label>
+          <%=eve.text_field :title, class: "form-control",placeholder: "Enter Event Name", required: "required" %>
+        <%end%>
+        <%=user.fields_for :address do |add|%>
+          <label for="name">Street</label>
+          <%=add.text_field :street, class: "form-control",placeholder: "Enter Street", required: "required" %>
+          <label for="name">City</label>
+          <%=add.text_field :city, class: "form-control",placeholder: "Enter City", required: "required" %>
+          <label for="name">Country</label>
+          <%=add.text_field :country, class: "form-control",placeholder: "Enter Country", required: "required" %>
+        <%end%>
+        <%=user.fields_for :comments do |comment|%>
+          <label for="name">Comment</label>
+          <%=comment.text_field :body, class: "form-control",placeholder: "Enter Comment", required: "required" %>
+        <%end%>
+        <%=user.fields_for :games do |game|%>
+          <label for="name">Game</label>
+          <%=game.text_field :title, class: "form-control",placeholder: "Enter Game", required: "required" %>
+        <%end%>
+      <%=user.submit "Register",style:"margin-top:20px;", data: { disable_with: "Please Wait...."}, class: "btn btn-large btn-primary", id: "user_submit"%>
+    <%end%>
+</div>
