@@ -1,5 +1,6 @@
 class HomesController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :authenticate_userr!, :only => [:add_author_book]
   def index
     @author = Author.all
     @comment = Comment.all

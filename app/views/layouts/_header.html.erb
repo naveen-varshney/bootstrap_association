@@ -1,0 +1,24 @@
+<div class="wrapper">
+  <header class="navbar" style="background-color: aliceblue">
+    <div class="navbar-brand nav">
+      <%=link_to "FindShop",'#'%>
+    </div>
+    <nav class="primary start main-menu">
+      <ul class="nav navbar-nav pull-right">
+        <%if current_userr.present?%>
+        <li><%=link_to "My Profile", '#'%></li>
+        <%else%>
+        <li><%= link_to "Login",userr_session_path%></li>
+        <%end%>
+        <%if current_userr.present?%>
+        <li><%=link_to "logout",destroy_userr_session_path, method: :delete%></li>
+        <%else%>
+        <li><%=link_to "Sign Up",new_userr_registration_path%></li>
+        <%end%>
+        <li><%= link_to "About Us",'#'%></li>
+        <li><%= link_to "Home",root_path%></li>
+      </ul>
+    </nav>
+  </header>
+
+</div>
